@@ -65,6 +65,9 @@ android {
 }
 
 dependencies {
+    def paging_version = "2.1.2"
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
     rootProject.appFoundationModule.each {
         add(it.configuration, it.dependency, it.options)
