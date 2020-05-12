@@ -1,5 +1,6 @@
 package com.developer.allef.boilerplateapp.data.paging
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.developer.allef.boilerplateapp.api.GitHubService
@@ -15,9 +16,11 @@ import retrofit2.Response
  * @author allef.santos on 12/05/20
  */
 class SearchDataSource(
-    val service: GitHubService, val query: String,
-    val requestFailureLiveData: MutableLiveData<RequestFailure>
+    private val service: GitHubService, val query: String
 ) : PageKeyedDataSource<Int, SearchItem>() {
+    private val requestFailureLiveData =  MutableLiveData<RequestFailure>()
+
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, SearchItem>
@@ -90,6 +93,11 @@ class SearchDataSource(
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, SearchItem>) {
     }
+
+    fun getRequestFailureLiveData(): LiveData<RequestFailure> {
+        return requestFailureLiveData
+    }
+
     private fun handleError(retryable: Retryable, t: Throwable) {
         requestFailureLiveData.postValue(RequestFailure(retryable, t.message!!))
     }

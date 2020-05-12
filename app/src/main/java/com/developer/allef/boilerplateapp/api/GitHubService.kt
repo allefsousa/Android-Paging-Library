@@ -10,8 +10,7 @@ import retrofit2.http.Query
  * @author allef.santos on 12/05/20
  */
 interface GitHubService {
-     val DEFAULT_PER_PAGE: Int
-         get() = 10
+
 
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("/search/repositories")

@@ -1,6 +1,7 @@
 package com.developer.allef.boilerplateapp.data.model
 
 
+import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
 
 data class SearchItem(
@@ -152,4 +153,19 @@ data class SearchItem(
     val watchers: Int,
     @SerializedName("watchers_count")
     val watchersCount: Int
-)
+){
+    companion object{
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<SearchItem?> = object : DiffUtil.ItemCallback<SearchItem?>() {
+            // Check if items represent the same thing.
+            override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            // Checks if the item contents have changed.
+            override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+                return true
+            }
+        }
+    }
+
+}
